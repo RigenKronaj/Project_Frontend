@@ -5,17 +5,32 @@ export default function App() {
     const [filter, setFilter] = useState("");
     const [books, setBooks] = useState([]);
     const [filterType, setFilterType] = useState("title");
+    const [availability, setAvailability] = useState(false);
 
     const getData = () => {
-        if (filter === "") {
-            fetch("http://localhost:8080/articles/")
-                .then(res => res.json())
-                .then(json => setBooks(json));
+        if(availability) {
+            if (filter === "") {
+                fetch("http://localhost:8080/articles/available")
+                    .then(res => res.json())
+                    .then(json => setBooks(json));
+            }
+            else {
+                fetch("http://localhost:8080/articles/available/" + filterType + "/" + filter)
+                    .then(res => res.json())
+                    .then(json => setBooks(json));
+            }
         }
         else {
-            fetch("http://localhost:8080/articles/" + filterType + "/" + filter)
-                .then(res => res.json())
-                .then(json => setBooks(json));
+            if (filter === "") {
+                fetch("http://localhost:8080/articles")
+                    .then(res => res.json())
+                    .then(json => setBooks(json));
+            }
+            else {
+                fetch("http://localhost:8080/articles/" + filterType + "/" + filter)
+                    .then(res => res.json())
+                    .then(json => setBooks(json));
+            }
         }
     }
 
@@ -25,11 +40,11 @@ export default function App() {
 
     return (
         <div className="main--body">
-            <div className="header">
-                <img src="https://i.pinimg.com/originals/5f/fb/de/5ffbdeceb84323decd76084b2efca958.png" className="header-img" />
-                <h1 className="header-text">LIBRARY APPLICATION</h1></div>
+            <header className="header">
+                <img src="https://i.pinimg.com/originals/5f/fb/de/5ffbdeceb84323decd76084b2efca958.png" className="header-img" alt="default" />
+                <h1 className="header-text">LIBRARY APPLICATION</h1></header>
             <div className="header--nav">
-                <div class="box">
+                <div className="box">
                     <input type="text" value={filter} onChange={(event) => {
                         setFilter(event.target.value);
                     }} className="input-search"></input>
@@ -40,13 +55,17 @@ export default function App() {
                         <option value="author">Filter by author</option>
                         <option value="genre">Filter by genre</option>
                         <option value="type">Filter by type</option>
-                        <option value="availability">Filter by availability</option>
                     </select>
-                    <button onClick={getData} className="search-btn">Search</button></div></div>
+                    <button onClick={getData} className="search-btn">Search</button>
+                    <input type="checkbox" onChange={() => {
+                        setAvailability((prevState) => !prevState);
+                    }}></input>
+                    <label>Check for available books only</label>
+                    </div></div>
             <div className="main--">
                 {books.map(book => <div>
                     <div>
-                        <img src={book.src} className="main--img" />
+                        <img src={book.src} className="main--img" alt="default"/>
                     </div>
                     <div className="main--text">
                         <h4>Book title: {book.title}</h4>
@@ -59,10 +78,10 @@ export default function App() {
                     </div>
                 </div>)}
             </div>
-            <div className='footer--1'>
-                <p><div className='footer--text'>©All rights reserved ALBANSI 2022</div></p>
-                <p><div className='footer--contact'>Contact us : +355 6X XXX XXXX</div></p>
-            </div>
+            <footer className='footer--1'>
+                <div className='footer--text'><p>©All rights reserved ALBANSI 2022</p></div>
+                <div className='footer--contact'><p>Contact us : +355 6X XXX XXXX</p></div>
+            </footer>
         </div>
     )
 }
