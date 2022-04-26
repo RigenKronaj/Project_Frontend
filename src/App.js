@@ -8,7 +8,7 @@ export default function App() {
     const [availability, setAvailability] = useState(false);
 
     const getData = () => {
-        if(availability) {
+        if (availability) {
             if (filter === "") {
                 fetch("http://localhost:8080/articles/available")
                     .then(res => res.json())
@@ -61,11 +61,13 @@ export default function App() {
                         setAvailability((prevState) => !prevState);
                     }}></input>
                     <label>Check for available books only</label>
-                    </div></div>
+                </div></div>
             <div className="main--">
                 {books.map(book => <div>
                     <div>
-                        <img src={book.src} className="main--img" alt="default"/>
+                        <a href={"http://localhost:3000/" + book.id}>
+                            <img src={book.src} className="main--img" alt="default" />
+                        </a>
                     </div>
                     <div className="main--text">
                         <h4>Book title: {book.title}</h4>
