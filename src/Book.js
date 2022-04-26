@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import "./Main.css"
 
 export default function Book() {
@@ -28,6 +28,19 @@ export default function Book() {
                     luctus et sollicitudin ut, accumsan at quam. Sed maximus nibh et ipsum consequat, vitae varius metus efficitur.<br />
                     Phasellus pharetra pharetra arcu non dapibus. In molestie dignissim tempus. Vivamus sed sagittis ex. Mauris<br />
                     convallis sem.</p>
+                <br/>
+                {book.date !== "NULL" &&
+                <div>
+                <h3>Booked from: {book.date}</h3>
+                <h3>Until: {book.dueDate}</h3>
+                <h5>Booking is currently unavailable.</h5>
+                </div>}
+
+                {book.date === "NULL" &&
+                <div>
+                    <h3>This article is available for booking!</h3>
+                    <Link to={"/book/" + book.id}><button>Book now.</button></Link>
+                </div>}
             </div>
             <footer className='footer--1'>
                 <div className='footer--text'><p>©All rights reserved ALBANSI 2022</p></div>
