@@ -114,8 +114,9 @@
     background-color: #54514a;
     height: 20px;
     padding: 30px 25px;
-    position: relative;
+    position: fixed;
     bottom: 0;
+    width: 100%;
   }
   .footer--text{
       color: #deebf8 ;

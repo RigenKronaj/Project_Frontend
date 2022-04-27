@@ -4,10 +4,10 @@ import "./Main.css";
 
 export default function Booking() {
 
-    const [form, setForm] = useState({ id: 0, UID: undefined, startDate: "", endDate: "" });
+    const [form, setForm] = useState({ "id": 0, "uid": undefined, "startDate": "", "endDate": "" });
     const [book, setBook] = useState({});
-    const params = useParams();
     const [len, setLen] = useState(0);
+    const params = useParams();
 
     useEffect(() => {
         fetch("http://localhost:8080/articles/" + params.bookID).then(res => res.json()).then(json => setBook(json));
@@ -16,7 +16,7 @@ export default function Booking() {
 
     useEffect(() => {
         setForm({ ...form, id: len + 1 });
-    }, [form.UID])
+    }, [form.uid])
 
     return (
         <div>
@@ -31,26 +31,47 @@ export default function Booking() {
                 <h3>{book.title} by {book.author}</h3>
                 <form width="300px">
                     <label>UID </label>
-                    <input type="number" onChange={(e) => setForm({ ...form, UID: parseInt(e.target.value) })}
-                        value={form.UID} style={{ position: 'absolute', right: '65%' }}></input>
+                    <input type="number" onChange={(e) =>
+                        setForm({
+                            ...form, uid: parseInt(e.target.value)
+                        })}
+                        value={form.uid} style={{ position: 'absolute', right: '65%' }}></input>
                     <br />
                     <label>Starting date (in String format) </label>
-                    <input onChange={(e) => setForm({ ...form, startDate: e.target.value })} value={form.startDate}
+                    <input onChange={(e) => {
+                        setForm({ ...form, startDate: e.target.value })
+                        setBook({ ...book, date: e.target.value })
+                    }}
+                        value={form.startDate}
                         style={{ position: 'absolute', right: '65%' }}></input>
                     <br />
                     <label>Ending date (in String format) </label>
-                    <input onChange={(e) => setForm({ ...form, endDate: e.target.value })} value={form.endDate}
+                    <input onChange={(e) => {
+                        setForm({ ...form, endDate: e.target.value })
+                        setBook({ ...book, dueDate: e.target.value })
+                    }} 
+                        value={form.endDate}
                         style={{ position: 'absolute', right: '65%' }}></input>
                     <br />
                     <br />
-                    <input onClick={() => console.log(form)} type="button" name="button" value="test"></input>
+                    <input onClick={() => console.log(book)} type="button" name="button" value="test"></input>
                     <input onClick={() => {
-                        if (form.UID === undefined || form.startDate === "" || form.endDate === "") {
+                        if (form.uid === undefined || form.startDate === "" || form.endDate === "") {
                             alert("One of the required fields is empty!");
                         } else {
-                            fetch("http://localhost:8080/booking", { method: 'POST', body: form })
-                                .then(res => res.json())
-                                .then(alert("i genuinely regret every passing second of my life"));
+                            fetch("http://localhost:8080/booking", {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(form)
+                            })
+                                .then((prevState) => setBook({...book, availability: !prevState}))
+                                .then(alert("Reservation has been made!"));
+                            fetch("http://localhost:8080/articles/" + params.bookID, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(book)  
+                            })
+                                .then(console.log("why yes, it actually works"));
                         }
                     }} type="button" value="Create reservation"></input>
                 </form>
