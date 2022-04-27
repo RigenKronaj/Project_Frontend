@@ -41,7 +41,7 @@ export default function App() {
     }
 
     // Calling the fetch API upon loading the component to retrieve the articles
-    
+
     useEffect(() => {
         fetch("http://localhost:8080/articles").then(res => res.json()).then(json => setBooks(json));
     }, []);
@@ -50,7 +50,8 @@ export default function App() {
         <div className="main--body">
             <header className="header">
                 <img src="https://i.pinimg.com/originals/5f/fb/de/5ffbdeceb84323decd76084b2efca958.png" className="header-img" alt="default" />
-                <h1 className="header-text">LIBRARY APPLICATION</h1></header>
+                <Link to="/"><h1 className="header-text">LIBRARY APPLICATION</h1></Link>
+            </header>
             <div className="header--nav">
                 <div className="box">
                     <input type="text" value={filter} onChange={(event) => {

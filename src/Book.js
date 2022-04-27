@@ -10,7 +10,7 @@ export default function Book() {
     const [book, setBook] = useState({});
 
     // Fetching the data upon loading the component
-    
+
     useEffect(() => {
         fetch("http://localhost:8080/articles/" + params.bookID).then(res => res.json()).then(json => setBook(json));
     }, []);
@@ -19,7 +19,7 @@ export default function Book() {
         <div>
             <header className="header">
                 <img src="https://i.pinimg.com/originals/5f/fb/de/5ffbdeceb84323decd76084b2efca958.png" className="header-img" alt="default" />
-                <h1 className="header-text">LIBRARY APPLICATION</h1>
+                <Link to="/"><h1 className="header-text">LIBRARY APPLICATION</h1></Link>
             </header>
             <div style={{ display: 'inline-block' }}>
                 <img src={book.src} alt="default" height="600" />
@@ -32,19 +32,19 @@ export default function Book() {
                     luctus et sollicitudin ut, accumsan at quam. Sed maximus nibh et ipsum consequat, vitae varius metus efficitur.<br />
                     Phasellus pharetra pharetra arcu non dapibus. In molestie dignissim tempus. Vivamus sed sagittis ex. Mauris<br />
                     convallis sem.</p>
-                <br/>
+                <br />
                 {book.date !== "NULL" &&
-                <div>
-                <h3>Booked from: {book.date}</h3>
-                <h3>Until: {book.dueDate}</h3>
-                <h5>Booking is currently unavailable.</h5>
-                </div>}
+                    <div>
+                        <h3>Booked from: {book.date}</h3>
+                        <h3>Until: {book.dueDate}</h3>
+                        <h5>Booking is currently unavailable.</h5>
+                    </div>}
 
                 {book.date === "NULL" &&
-                <div>
-                    <h3>This article is available for booking!</h3>
-                    <Link to={"/book/" + book.id}><button>Book now.</button></Link>
-                </div>}
+                    <div>
+                        <h3>This article is available for booking!</h3>
+                        <Link to={"/book/" + book.id}><button>Book now.</button></Link>
+                    </div>}
             </div>
             <footer className='footer--1'>
                 <div className='footer--text'><p>©All rights reserved ALBANSI 2022</p></div>
