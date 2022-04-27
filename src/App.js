@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Main.css"
 
 export default function App() {
+
+    // Declaring the state variables of the component
+
     const [filter, setFilter] = useState("");
     const [books, setBooks] = useState([]);
     const [filterType, setFilterType] = useState("title");
     const [availability, setAvailability] = useState(false);
+
+    // Declaring a function to fetch data once requested by the user
 
     const getData = () => {
         if (availability) {
@@ -34,6 +39,8 @@ export default function App() {
         }
     }
 
+    // Calling the fetch API upon loading the component to retrieve the articles
+    
     useEffect(() => {
         fetch("http://localhost:8080/articles").then(res => res.json()).then(json => setBooks(json));
     }, []);

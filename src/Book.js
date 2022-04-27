@@ -4,9 +4,13 @@ import "./Main.css"
 
 export default function Book() {
 
+    // Declaring state variables and parameters
+
     let params = useParams();
     const [book, setBook] = useState({});
 
+    // Fetching the data upon loading the component
+    
     useEffect(() => {
         fetch("http://localhost:8080/articles/" + params.bookID).then(res => res.json()).then(json => setBook(json));
     }, []);
