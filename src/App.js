@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import "./Main.css"
 
 export default function App() {
@@ -68,6 +69,7 @@ export default function App() {
                         setAvailability((prevState) => !prevState);
                     }}></input>
                     <label>Check for available books only</label>
+                    <Link to={"/reservations"}><button className='reservation-button'>Check my reservations</button></Link>
                 </div></div>
             <div className="main--">
                 {books.map(book => <div>

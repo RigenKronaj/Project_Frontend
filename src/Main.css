@@ -114,7 +114,7 @@
     background-color: #54514a;
     height: 20px;
     padding: 30px 25px;
-    position: absolute;
+    position: relative;
     bottom: 0;
   }
   .footer--text{
@@ -124,5 +124,8 @@
   .footer--contact{
     color: #deebf8 ;
     margin-left: 930px;
-
+  }
+  .reservation-button {
+    width: 200px;
+    margin-left: 500px
   }
